@@ -1,0 +1,4 @@
+name: LavaSpeed
+version: '${project.version}'
+main: de.itotterstadt.lavaspeed.LavaSpeed
+api-version: '1.20'
