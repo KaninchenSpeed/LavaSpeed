@@ -1,5 +1,6 @@
 package de.itotterstadt.lavaspeed.listeners
 
+import de.itotterstadt.lavaspeed.configuration
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -20,10 +21,19 @@ class MoveListener: Listener {
             return
         }
 
+        if (configuration!!.get("lavaSpeed") == null) {
+            configuration!!.set("lavaSpeed", 0.05f)
+            configuration!!.save()
+        }
+        if (configuration!!.get("lavaSpeedEffect") == null) {
+            configuration!!.set("lavaSpeedEffect", 0.3f)
+            configuration!!.save()
+        }
+
         event.player.allowFlight = true
         event.player.isFlying = true
-        event.player.walkSpeed = 0.3f
-        event.player.flySpeed = 0.05f
+        event.player.walkSpeed = configuration?.getDouble("lavaSpeedEffect")?.toFloat() ?: 0.3f
+        event.player.flySpeed = configuration?.getDouble("lavaSpeed")?.toFloat() ?: 0.05f
     }
 
 }

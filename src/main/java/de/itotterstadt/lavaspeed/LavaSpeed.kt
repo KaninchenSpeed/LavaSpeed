@@ -5,9 +5,11 @@ import org.bukkit.event.HandlerList
 import org.bukkit.plugin.java.JavaPlugin
 
 var plugin: JavaPlugin? = null
+var configuration: Config? = null
 class LavaSpeed : JavaPlugin() {
     override fun onEnable() {
         plugin = this
+        configuration = Config("config")
         registerListener()
     }
 
