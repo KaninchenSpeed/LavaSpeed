@@ -1,6 +1,7 @@
 package de.itotterstadt.lavaspeed.listeners
 
 import de.itotterstadt.lavaspeed.configuration
+import de.itotterstadt.lavaspeed.plugin
 import org.bukkit.GameMode
 import org.bukkit.Material
 import org.bukkit.event.EventHandler
@@ -9,6 +10,8 @@ import org.bukkit.event.player.PlayerMoveEvent
 import org.bukkit.util.Vector
 
 class MoveListener: Listener {
+
+    private val teams = configuration?.getStringList("teams")
 
     @EventHandler
     fun onMove(event: PlayerMoveEvent) {
@@ -28,6 +31,13 @@ class MoveListener: Listener {
         if (configuration!!.get("lavaSpeedEffect") == null) {
             configuration!!.set("lavaSpeedEffect", 0.3f)
             configuration!!.save()
+        }
+
+        val team = plugin!!.server.scoreboardManager.mainScoreboard.teams.find {
+            it.hasPlayer(event.player)
+        }
+        if (teams != null && teams.size > 0 && (team == null || !teams.contains(team.name))) {
+            return
         }
 
         event.player.allowFlight = true
