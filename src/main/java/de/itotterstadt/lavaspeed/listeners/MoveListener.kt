@@ -12,6 +12,19 @@ import org.bukkit.util.Vector
 class MoveListener: Listener {
 
     private val teams = configuration?.getStringList("teams")
+    private val lavaSpeed = configuration?.getDouble("lavaSpeed")?.toFloat() ?: 0.3f
+    private val lavaSpeedEffect = configuration?.getDouble("lavaSpeedEffect")?.toFloat() ?: 0.05f
+
+    init {
+        if (configuration!!.get("lavaSpeed") == null) {
+            configuration!!.set("lavaSpeed", 0.05f)
+            configuration!!.save()
+        }
+        if (configuration!!.get("lavaSpeedEffect") == null) {
+            configuration!!.set("lavaSpeedEffect", 0.3f)
+            configuration!!.save()
+        }
+    }
 
     @EventHandler
     fun onMove(event: PlayerMoveEvent) {
@@ -29,14 +42,6 @@ class MoveListener: Listener {
             return
         }
 
-        if (configuration!!.get("lavaSpeed") == null) {
-            configuration!!.set("lavaSpeed", 0.05f)
-            configuration!!.save()
-        }
-        if (configuration!!.get("lavaSpeedEffect") == null) {
-            configuration!!.set("lavaSpeedEffect", 0.3f)
-            configuration!!.save()
-        }
 
         val team = plugin!!.server.scoreboardManager.mainScoreboard.teams.find {
             it.hasPlayer(event.player)
@@ -47,8 +52,8 @@ class MoveListener: Listener {
 
         event.player.allowFlight = true
         event.player.isFlying = true
-        event.player.walkSpeed = configuration?.getDouble("lavaSpeedEffect")?.toFloat() ?: 0.3f
-        event.player.flySpeed = configuration?.getDouble("lavaSpeed")?.toFloat() ?: 0.05f
+        event.player.walkSpeed = lavaSpeedEffect
+        event.player.flySpeed = lavaSpeed
     }
 
 }
