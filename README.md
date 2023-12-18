@@ -7,6 +7,9 @@ a plugin to configure the movement speed in lava
 ```yaml
 lavaSpeed: [movement speed]
 lavaSpeedEffect: [fov speed]
+teams:
+  - team1
+  ...team names...
 ```
 
 ### Defaults
