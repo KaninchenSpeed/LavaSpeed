@@ -8,7 +8,7 @@ a plugin to configure the movement speed in lava
 lavaSpeed: [movement speed]
 lavaSpeedEffect: [fov speed]
 teams:
-  - team1
+  - [team name]
   ...team names...
 ```
 
